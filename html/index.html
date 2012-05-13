@@ -12,8 +12,47 @@
   </head>
   <body>
     <h1>Numbermind</h1>
-    <div>
+    <div id="step1">
       <label>
-        <input type="number" min="1" max="10">
+        How many digits does your number have?
+        <input type="number" min="1" max="10" data-bind="value: numDigits" />
+        <a data-bind="click: step2" href="#">Next</a>
+      </label>
+    </div>
+    <div id="step2">
+      <div id="current-guess">
+        <span data-bind="text: currentGuess"></span>
+        <input type="number" min="0" data-bind="value: currentCorrectDigits, max: numDigits" />
+      </div>
+      <table id="guesses">
+        <tbody data-bind="foreach: guesses">
+          <tr>
+            <td data-bind="text: guess"></td>
+            <td data-bind="text: correctDigits"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script>
+    ko.bindingHandlers.max = {
+      update: function(element, valueAccessor) {
+        var value = ko.utils.unwrapObservable(valueAccessor());
+        element.setAttribute("max", value);
+      }
+    };
+    var viewModel = {
+      numDigits: ko.observable(4),
+      step2: function () {
+        this.numDigits(this.numDigits() + 1);
+      },
+      currentGuess: 2401,
+      currentCorrectDigits: ko.observable(0),
+      guesses: [
+        {guess: 4342, correctDigits: 3},
+        {guess: 5678, correctDigits: 2}
+      ]
+    };
+    ko.applyBindings(viewModel);
+    </script>
   </body>
 </html>
