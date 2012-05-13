@@ -8,30 +8,39 @@
     <script>
       $.webshims.polyfill('forms forms-ext');
     </script>
+    <link rel="stylesheet" href="css/style.css"></link>
     <title>Numbermind!</title>
   </head>
   <body>
-    <h1>Numbermind</h1>
-    <div id="step1">
-      <label>
-        How many digits does your number have?
-        <input type="number" min="1" max="10" data-bind="value: numDigits" />
-        <a data-bind="click: step2" href="#">Next</a>
-      </label>
-    </div>
-    <div id="step2">
-      <div id="current-guess">
-        <span data-bind="text: currentGuess"></span>
-        <input type="number" min="0" data-bind="value: currentCorrectDigits, max: numDigits" />
+    <header role="banner">
+      <hgroup>
+        <h1>Numbermind</h1>
+      </hgroup>
+    </header>
+    <div id="step-container">
+    <div id="steps">
+      <div id="step1">
+        <label>
+          How many digits does your number have?
+          <input type="number" min="1" max="10" data-bind="value: numDigits" />
+          <a data-bind="click: step2" href="#">Next</a>
+        </label>
       </div>
-      <table id="guesses">
-        <tbody data-bind="foreach: guesses">
-          <tr>
-            <td data-bind="text: guess"></td>
-            <td data-bind="text: correctDigits"></td>
-          </tr>
-        </tbody>
-      </table>
+      <div id="step2">
+        <div id="current-guess">
+          <span data-bind="text: currentGuess"></span>
+          <input type="number" min="0" data-bind="value: currentCorrectDigits, max: numDigits" />
+        </div>
+        <table id="guesses">
+          <tbody data-bind="foreach: guesses">
+            <tr>
+              <td data-bind="text: guess"></td>
+              <td data-bind="text: correctDigits"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
     </div>
     <script>
     ko.bindingHandlers.max = {
@@ -43,7 +52,7 @@
     var viewModel = {
       numDigits: ko.observable(4),
       step2: function () {
-        this.numDigits(this.numDigits() + 1);
+        $("#steps").css("left", "-100%");
       },
       currentGuess: 2401,
       currentCorrectDigits: ko.observable(0),
