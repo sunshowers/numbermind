@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="js/modernizr-custom.js"></script>
+    <script src="js/knockout-2.1.0.js"></script>
+    <script src="js/webshim/minified/polyfiller.js"></script>
+    <script>
+      $.webshims.polyfill('forms forms-ext');
+    </script>
+    <title>Numbermind!</title>
   </head>
   <body>
-    Test
+    <h1>Numbermind</h1>
+    <div>
+      <label>
+        <input type="number" min="1" max="10">
   </body>
-</body>
+</html>
