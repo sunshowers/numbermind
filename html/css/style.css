@@ -134,6 +134,8 @@ input {
   text-align: center;
   padding-left: auto;
   padding-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #step1 label, #step1 input {
