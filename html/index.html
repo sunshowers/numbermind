@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script src="js/modernizr-custom.js"></script>
     <script src="js/knockout-2.1.0.js"></script>
@@ -50,17 +51,36 @@
       }
     };
 
+    ko.extenders.integer = function (target) {
+      var result = ko.dependentObservable({
+        read: function() {
+          return parseInt(target());
+        },
+        write: function(val) {
+          target(parseInt(val));
+        }
+      });
+      return result;
+    };
     var viewModel = {
-      numDigits: ko.observable(4),
+      numDigits: ko.observable(4).extend({integer: true}),
       moveToStep2: function () {
         this.resetGuesses();
+        var self = this;
+        $.post("/numbermind", ko.toJSON(this), function (data) {
+          console.log("Incoming data: " + JSON.stringify(data));
+          self.addGuessURL(data.addGuessURL);
+          self.currentGuess(data.nextGuess);
+        }, "json");
         $("#steps").css("left", "-100%");
       },
       resetGuesses: function() {
+        this.addGuessURL("");
         this.currentGuess(0);
         this.currentCorrectDigits(0);
         this.guesses([]);
       },
+      addGuessURL: ko.observable(""),
       currentGuess: ko.observable(0),
       currentCorrectDigits: ko.observable(0),
       guesses: ko.observableArray([])
