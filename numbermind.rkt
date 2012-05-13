@@ -23,8 +23,8 @@
     (raise (exn:fail:contract "Input should be a number" (current-continuation-marks))))
   (handle-guess num-digits '() request))
 
-(serve/servlet start ; answers requests
+(serve/servlet start
                #:launch-browser? #f
-               #:servlet-path "/numbermind" ; is the default URL
+               #:servlet-path "/numbermind"
                #:extra-files-paths (list "html")
-               #:port 8080) ; is the port
+               #:port 8080)
