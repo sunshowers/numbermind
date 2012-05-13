@@ -8,7 +8,7 @@
 (define num-digits (make-parameter 0))
 
 (define (send-next-guess request guess)
-  (define handler (λ (req) (handle-guess-response request)))
+  (define handler (λ (req) (handle-guess-response req)))
   (define (response-generator embed/url)
     (response/json
      `#hash((nextGuess . ,guess)
@@ -17,7 +17,6 @@
 
 (define (handle-guess-response request)
   (define data (json-request->jsexpr request))
-  (displayln data)
   (send-next-guess request (random (expt 10 (num-digits)))))
 
 (define (start request)
