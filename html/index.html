@@ -3,9 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="js/modernizr-custom.js"></script>
     <script src="js/knockout-2.1.0.js"></script>
-    <script src="js/webshim/minified/polyfiller.js"></script>
     <script>
       $.webshims.polyfill('forms forms-ext');
     </script>
@@ -25,11 +23,11 @@
         <h1>Step 1: Think of a number.</h1>
         <p>Memorize it or write it down somewhere where we can't see it.</p>
         <div>
-          <label>
-            How many digits does your number have?
-            <input type="number" min="1" max="10" data-bind="value: numDigits" />
-            <a data-bind="click: moveToStep2" href="#">Next</a>
+          <label for="num-digits">
+          How many digits does your number have?
           </label>
+          <input name="num-digits" type="number" min="1" max="10" data-bind="value: numDigits" />
+          <a data-bind="click: moveToStep2" href="#">Next</a>
         </div>
       </div>
       <div id="step2">
