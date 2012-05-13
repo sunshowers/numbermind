@@ -31,6 +31,7 @@
         <div id="current-guess">
           <span data-bind="text: currentGuess"></span>
           <input type="number" min="0" data-bind="value: currentCorrectDigits, max: numDigits" />
+          <a data-bind="click: handleGuessResponse" href="#">Next guess</a>
         </div>
         <table id="guesses">
           <tbody data-bind="foreach: guesses">
@@ -64,15 +65,27 @@
     };
     var viewModel = {
       numDigits: ko.observable(4).extend({integer: true}),
+      _setupNextGuess: function (data) {
+        this.addGuessURL(data.addGuessURL);
+        this.currentGuess(data.nextGuess);
+      },
       moveToStep2: function () {
         this.resetGuesses();
         var self = this;
         $.post("/numbermind", ko.toJSON(this), function (data) {
           console.log("Incoming data: " + JSON.stringify(data));
-          self.addGuessURL(data.addGuessURL);
-          self.currentGuess(data.nextGuess);
-        }, "json");
+          self._setupNextGuess(data);
+        });
         $("#steps").css("left", "-100%");
+      },
+      handleGuessResponse: function () {
+        this.guesses.push({guess: this.currentGuess(),
+                           correctDigits: this.currentCorrectDigits()});
+        var self = this;
+        $.post(this.addGuessURL(), ko.toJSON(this), function (data) {
+          console.log("Incoming data: " + JSON.stringify(data));
+          self._setupNextGuess(data);
+        });
       },
       resetGuesses: function() {
         this.addGuessURL("");
@@ -81,8 +94,8 @@
         this.guesses([]);
       },
       addGuessURL: ko.observable(""),
-      currentGuess: ko.observable(0),
-      currentCorrectDigits: ko.observable(0),
+      currentGuess: ko.observable(0).extend({integer: true}),
+      currentCorrectDigits: ko.observable(0).extend({integer: true}),
       guesses: ko.observableArray([])
     };
     ko.applyBindings(viewModel);
