@@ -1,37 +1,36 @@
 #lang racket
 
-(require (planet dherman/json:4:0))
-(require "utils.rkt")
-(require web-server/servlet
-         web-server/servlet-env)
+(require "z3/smtlib2-parser.rkt")
 
-(define num-digits (make-parameter 0))
+(define numbermind-vars (make-parameter #f))
 
-(define (send-next-guess request guess)
-  (define handler (λ (req) (handle-guess-response req)))
-  (define (response-generator embed/url)
-    (response/json
-     `#hash((nextGuess . ,guess)
-            (addGuessURL . ,(embed/url handler)))))
-  (send/suspend/dispatch response-generator))
+(define (make-variables num-digits)
+  (define vars (smt:make-fun/list num-digits () Int))
+  ;; Every variable is between 0 and 9
+  (for ([var vars]) (smt:assert (and/s (>=/s var 0) (<=/s var 9))))
+  vars)
 
-(define (handle-guess-response request)
-  (define data (json-request->jsexpr request))
-  (send-next-guess request (random (expt 10 (num-digits)))))
+(define-syntax-rule (with-new-numbermind num-digits body ...)
+  (smt:with-context
+   (smt:new-context-info)
+   (parameterize ([numbermind-vars (make-variables num-digits)])
+     body ...)))
 
-(define (start request)
-  (define data (json-request->jsexpr request))
-  (define input-num-digits (hash-ref data 'numDigits))
-  (unless (and
-           (exact-nonnegative-integer? input-num-digits)
-           (>= input-num-digits 1)
-           (<= input-num-digits 10))
-    (raise (exn:fail:contract "Input should be a number" (current-continuation-marks))))
-  (parameterize ([num-digits input-num-digits])
-    (send-next-guess request (random (expt 10 input-num-digits)))))
+(define (add-guess guess correct-digits)
+  (define correct-lhs
+    (apply +/s
+           (for/list ([x guess]
+                      [var (numbermind-vars)])
+             (ite/s (=/s var (- (char->integer x) 48)) 1 0))))
+  (smt:assert (=/s correct-lhs correct-digits)))
 
-(serve/servlet start
-               #:launch-browser? #f
-               #:servlet-path "/numbermind"
-               #:extra-files-paths (list "html")
-               #:port 8080)
+(define (get-new-guess)
+  (define sat (smt:check-sat))
+  (if (eq? sat 'sat)
+      ; Get a guess from the SMT solver
+      (list->string (map (compose integer->char (curry + 48)) (map smt:eval (numbermind-vars))))
+      #f))
+
+(provide with-new-numbermind
+         add-guess
+         get-new-guess)
