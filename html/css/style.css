@@ -60,6 +60,11 @@ body {
 
 a, a:active, a:visited {
   color: rgb(242, 242, 242);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 body > header {
