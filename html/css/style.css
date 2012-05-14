@@ -80,7 +80,11 @@ body.step2 > header {
 h1, body > header h1 {
   font-size: 1.8em;
   color: rgb(242, 242, 242);
-  text-transform: uppercase;
+  font-variant: small-caps;
+}
+
+h2 {
+  font-variant: small-caps;
 }
 
 p {
@@ -88,7 +92,9 @@ p {
 }
 
 #step-container {
-  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
   overflow: hidden;
   position: relative;
 }
@@ -132,12 +138,12 @@ body.step1 #step2, body.step2 #step1 {
 
 
 #current-guess {
-  width: 67%;
+  width: 50%;
   float: left;
 }
 
 #guesses {
-  width: 33%;
+  width: 50%;
   float: right;
 }
 

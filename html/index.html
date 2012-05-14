@@ -37,7 +37,7 @@
         <h1>Step 2: We guess it.</h1>
         <p>You tell us how many digits are correct and in the correct position.</p>
         <div id="current-guess">
-          <div>Our guess
+          <div><h2>Our guess</h2>
           <div class="guess" data-bind="text: currentGuess"></div>
           <form data-bind="submit: handleGuessResponse" autocomplete="off">
             <input type="text" maxlength="1" data-bind="value: currentCorrectDigitsText, range: [0, numDigits], valueUpdate: 'afterkeydown', style: { backgroundColor: computeColor(currentCorrectDigitsText()) }" required />
