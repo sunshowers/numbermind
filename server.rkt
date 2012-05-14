@@ -5,9 +5,12 @@
          "utils.rkt")
 (require srfi/13
          web-server/servlet
-         web-server/servlet-env)
+         web-server/servlet-env
+         racket/runtime-path)
 
 (define num-digits (make-parameter 0))
+
+(define-runtime-path html-path "html")
 
 (define (send-next-guess request guess)
   (define handler (λ (req) (handle-guess-response guess req)))
@@ -45,5 +48,5 @@
 (serve/servlet start
                #:launch-browser? #f
                #:servlet-path "/numbermind"
-               #:extra-files-paths (list "html")
+               #:extra-files-paths (list html-path)
                #:port 8080)
