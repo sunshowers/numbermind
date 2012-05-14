@@ -1,4 +1,4 @@
-#lang racket
+#lang racket/base
 
 (require (planet dherman/json:4:0))
 (require "numbermind.rkt"

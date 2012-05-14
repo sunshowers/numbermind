@@ -1,6 +1,7 @@
-#lang racket
+#lang racket/base
 
 (require "z3/smtlib2-parser.rkt")
+(require racket/function)
 
 (define numbermind-vars (make-parameter #f))
 

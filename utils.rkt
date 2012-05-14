@@ -1,4 +1,4 @@
-#lang racket
+#lang racket/base
 
 (require web-server/http)
 (require (planet dherman/json:4:0))
@@ -13,8 +13,8 @@
          #:code [code 200]
          #:message [message #"Okay"]
          #:seconds [seconds (current-seconds)]
-         #:cookies [cooks empty]
-         #:headers [hdrs empty]
+         #:cookies [cooks '()]
+         #:headers [hdrs '()]
          #:preamble [preamble #""])
   (response
    code message seconds #"application/json"
