@@ -6,6 +6,7 @@
     <script src="js/knockout-2.1.0.js"></script>
     <script src="js/modernizr-custom.js"></script>
     <script src="js/number-polyfill/number-polyfill.js"></script>
+    <script src="js/script.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Montserrat">
     <title>Numbermind!</title>
@@ -25,7 +26,7 @@
           <label for="num-digits">
           How many digits does your number have?
           </label>
-          <input name="num-digits" type="number" min="1" max="5" data-bind="value: numDigits" />
+          <input name="num-digits" type="number" min="2" max="5" data-bind="value: numDigits" />
           <a data-bind="click: moveToStep2" href="#">Next</a>
         </div>
       </div>
@@ -47,60 +48,8 @@
     </div>
     </div>
     <script>
-    ko.bindingHandlers.max = {
-      update: function(element, valueAccessor) {
-        var value = ko.utils.unwrapObservable(valueAccessor());
-        element.setAttribute("max", value);
-      }
-    };
-
-    ko.extenders.integer = function (target) {
-      var result = ko.dependentObservable({
-        read: function() {
-          return parseInt(target());
-        },
-        write: function(val) {
-          target(parseInt(val));
-        }
-      });
-      return result;
-    };
-    var viewModel = {
-      numDigits: ko.observable(4).extend({integer: true}),
-      _setupNextGuess: function (data) {
-        this.addGuessURL(data.addGuessURL);
-        this.currentGuess(data.nextGuess);
-      },
-      moveToStep2: function () {
-        this.resetGuesses();
-        var self = this;
-        $.post("/numbermind", ko.toJSON(this), function (data) {
-          console.log("Incoming data: " + JSON.stringify(data));
-          self._setupNextGuess(data);
-        });
-        $("#steps").css("left", "-100%");
-      },
-      handleGuessResponse: function () {
-        this.guesses.unshift({guess: this.currentGuess(),
-                              correctDigits: this.currentCorrectDigits()});
-        var self = this;
-        $.post(this.addGuessURL(), ko.toJSON(this), function (data) {
-          console.log("Incoming data: " + JSON.stringify(data));
-          self._setupNextGuess(data);
-        });
-      },
-      resetGuesses: function() {
-        this.addGuessURL("");
-        this.currentGuess(0);
-        this.currentCorrectDigits(0);
-        this.guesses([]);
-      },
-      addGuessURL: ko.observable(""),
-      currentGuess: ko.observable("0"),
-      currentCorrectDigits: ko.observable(0).extend({integer: true}),
-      guesses: ko.observableArray([])
-    };
     ko.applyBindings(viewModel);
+    moveTo(1);
     </script>
   </body>
 </html>

@@ -59,7 +59,7 @@ body {
 }
 
 body > header {
-  font-size: 3em;
+  font-size: 2em;
   padding-top: 1.5em;
   padding-bottom: 1.5em;
   padding-left: 55px;
@@ -94,13 +94,22 @@ p {
 }
 
 #steps > div > h1 {
-  line-height: 2em;
+  margin-bottom: 1em;
 }
 
 #steps > div {
   width: 50%;
   float: left;
 }
+
+#steps.step1 {
+  left: 0px;
+}
+
+#steps.step2 {
+  left: -100%;
+}
+
 
 #current-guess {
   width: 67%;

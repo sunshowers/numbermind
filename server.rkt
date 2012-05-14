@@ -33,7 +33,7 @@
   (define input-num-digits (hash-ref data 'numDigits))
   (unless (and
            (exact-nonnegative-integer? input-num-digits)
-           (>= input-num-digits 1)
+           (>= input-num-digits 2)
            (<= input-num-digits 10))
     (raise (exn:fail:contract "Input should be a number" (current-continuation-marks))))
   (parameterize ([num-digits input-num-digits])
