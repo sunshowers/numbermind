@@ -59,9 +59,10 @@ body {
 }
 
 body > header {
+  background-color: #151d1f;
   font-size: 2em;
-  padding-top: 1.5em;
-  padding-bottom: 1.5em;
+  padding-top: 1em;
+  padding-bottom: 1em;
   padding-left: 55px;
   padding-right: 55px;
   -webkit-transition: all 0.4s ease-in-out;
@@ -69,6 +70,7 @@ body > header {
   -o-transition: all 0.4s ease-in-out;
   -ms-transition: all 0.4s ease-in-out;  
   transition: all 0.4s ease-in-out;
+  margin-bottom: 0.5em;
 }
 
 body.step2 > header {
