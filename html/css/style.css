@@ -52,7 +52,7 @@ body {
   max-width: 100%;
   position: relative;
   margin: 0px auto;
-  background-color: rgb(41, 72, 82);
+  background-color: rgb(41, 58, 62);
   color: rgb(180, 180, 180);
   text-align: center;
   font-family: "Montserrat", sans-serif;
@@ -64,6 +64,17 @@ body > header {
   padding-bottom: 1.5em;
   padding-left: 55px;
   padding-right: 55px;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;  
+  transition: all 0.4s ease-in-out;
+}
+
+body.step2 > header {
+  font-size: 1.5em;
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
 }
 
 h1, body > header h1 {
@@ -102,12 +113,21 @@ p {
   float: left;
 }
 
-#steps.step1 {
+body.step1 #steps {
   left: 0px;
 }
 
-#steps.step2 {
+body.step2 #steps {
   left: -100%;
+}
+
+body.step1 #step2, body.step2 #step1 {
+  visibility: hidden;
+  -webkit-transition: all 0.4s ease-in-out;
+  -moz-transition: all 0.4s ease-in-out;
+  -o-transition: all 0.4s ease-in-out;
+  -ms-transition: all 0.4s ease-in-out;  
+  transition: all 0.4s ease-in-out;
 }
 
 

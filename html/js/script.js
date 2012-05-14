@@ -5,10 +5,10 @@ function moveTo(step) {
       console.log("Incoming data: " + JSON.stringify(data));
       viewModel._setupNextGuess(data);
     });
-    $("#steps").removeClass("step1").addClass("step2");
+    $("body").removeClass("step1").addClass("step2");
   }
   else if (step == 1) {
-    $("#steps").removeClass("step2").addClass("step1");
+    $("body").removeClass("step2").addClass("step1");
   }
 }
 ko.bindingHandlers.max = {
