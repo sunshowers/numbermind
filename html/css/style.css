@@ -145,9 +145,10 @@ label {
   color: rgb(242, 242, 242);
 }
 
-input {
+input[type="text"] {
   border: 0px;
   margin-top: 0.5em;
+  margin-bottom: 0.5em;
   padding-top: 0.2em;
   padding-bottom: 0.2em;
   width: 200px;
@@ -166,8 +167,20 @@ input {
   transition: all 0.1s ease-in-out;
 }
 
-input:invalid {
+input[type="text"]:invalid {
   background-color: rgb(120, 40, 40);
+}
+
+input[type="submit"] {
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.2em;
+  border: 0px;
+  font-size: 1.6em;
+  background-color: #66909a;
+  color: white;
+  text-transform: uppercase;
+  font-family: "Montserrat", sans-serif;
 }
 
 #step1 label, #step1 input, #step2 input {

@@ -21,13 +21,15 @@
     <div id="steps">
       <div id="step1">
         <h1>Step 1: Think of a number.</h1>
-        <p>Memorize it or write it down somewhere where we can't see it.</p>
+        <p>Memorize it or write it down where we can't see it.</p>
         <div>
+        <form data-bind="submit: moveToStep2" autocomplete="off">
           <label for="num-digits">
           How many digits does your number have?
           </label>
           <input name="num-digits" maxlength="1" type="text" data-bind="value: numDigitsText, valueUpdate: 'afterkeydown'" pattern="[2-5]" required />
-          <a data-bind="click: moveToStep2" href="#">Next</a>
+          <input type="submit" value="Start!">
+        </form>
         </div>
       </div>
       <div id="step2">
@@ -36,7 +38,7 @@
         <div id="current-guess">
           <div>Our guess
           <div class="guess" data-bind="text: currentGuess"></div>
-          <input type="text" maxlength="1" data-bind="value: currentCorrectDigits, range: [0, numDigits], valueUpdate: 'afterkeydown'" />
+          <input type="text" maxlength="1" data-bind="value: currentCorrectDigits, range: [0, numDigits], valueUpdate: 'afterkeydown'" required />
           <a data-bind="click: handleGuessResponse" href="#">Next guess</a>
           </div>
         </div>
