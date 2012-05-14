@@ -51,6 +51,11 @@ function ViewModel() {
   this.handleGuessResponse = function () {
     this.guesses.unshift({guess: this.currentGuess(),
                           correctDigits: this.currentCorrectDigits()});
+    if (this.currentCorrectDigits() === this.numDigits()) {
+      this.hasWon(true);
+      return;
+    }
+
     this.currentGuess("....");
     this.ajaxActive(true);
     var self = this;
@@ -66,6 +71,7 @@ function ViewModel() {
     this.currentGuess("....");
     this.currentCorrectDigitsText("0");
     this.guesses([]);
+    this.hasWon(false);
   };
 
   this.addGuessURL = ko.observable("");
@@ -78,6 +84,17 @@ function ViewModel() {
       return "Finish";
     else
       return "Next";
+  }, this);
+
+  this.hasWon = ko.observable(false);
+
+  this.divShown = ko.computed(function() {
+    if (this.hasWon())
+      return "success";
+    else if (this.currentGuess() === false)
+      return "fail-guess";
+    else
+      return "current-guess";
   }, this);
 
   this.ajaxActive = ko.observable(false);

@@ -40,7 +40,7 @@
       <div id="step2">
         <h1>Step 2: We guess it.</h1>
         <p>You tell us how many digits are correct and in the correct position.</p>
-        <div id="current-guess" data-bind="style: { display: currentGuess() === false ? 'none' : 'block' }">
+        <div id="current-guess" data-bind="style: { display: divShown() === 'current-guess' ? 'block' : 'none' }">
           <div><h2>Our guess</h2>
           <div class="guess" data-bind="text: currentGuess"></div>
           <form data-bind="submit: handleGuessResponse" autocomplete="off">
@@ -52,7 +52,8 @@
           </form>
           </div>
         </div>
-        <div id="fail-guess" data-bind="style: { display: currentGuess() === false ? 'block' : 'none' }">
+
+        <div id="fail-guess" data-bind="style: { display: divShown() === 'fail-guess' ? 'block' : 'none' }">
           <div>
             <h1>Oops!</h1>
             <p>Looks like we couldn't find a match. Are you sure your answers are correct?</p>
@@ -60,6 +61,15 @@
               <input type="submit" value="Start over"></input>
             </form>
           </div>
+        </div>
+
+        <div id="success" data-bind="style: { display: divShown() === 'success' ? 'block' : 'none' }">
+          <h1>Thanks.</h1>
+          <p>Created by <a href="http://www.less-broken.com/">Siddharth Agarwal</a> and <a href="http://www.cse.iitk.ac.in/users/karkare/">Amey Karkare</a>.</p>
+          <p>We harness the combined power of <a href="http://racket-lang.org">Racket</a> and <a href="http://research.microsoft.com/en-us/um/redmond/projects/z3/index.html">Z3</a>. <a href="https://github.com/sid0/z3.rkt">Learn more</a>.</p>
+          <form data-bind="submit: moveToStep1">
+            <input type="submit" value="Start over"></input>
+          </form>
         </div>
         <table id="guesses">
           <caption>Previous guesses</caption>
