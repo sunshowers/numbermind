@@ -1,9 +1,11 @@
 function moveTo(step) {
   viewModel.resetGuesses();
   if (step == 2) {
+    viewModel.ajaxActive(true);
     $.post("/numbermind", ko.toJSON(viewModel), function (data) {
       console.log("Incoming data: " + JSON.stringify(data));
       viewModel._setupNextGuess(data);
+      viewModel.ajaxActive(false);
     });
     $("body").removeClass("step1").addClass("step2");
   }
@@ -50,8 +52,10 @@ function ViewModel() {
     this.guesses.unshift({guess: this.currentGuess(),
                           correctDigits: this.currentCorrectDigits()});
     this.currentGuess("....");
+    this.ajaxActive(true);
     var self = this;
     $.post(this.addGuessURL(), ko.toJSON(this), function (data) {
+      self.ajaxActive(false);
       console.log("Incoming data: " + JSON.stringify(data));
       self._setupNextGuess(data);
     });
@@ -75,6 +79,8 @@ function ViewModel() {
     else
       return "Next";
   }, this);
+
+  this.ajaxActive = ko.observable(false);
 
   this.guesses = ko.observableArray([]);
 

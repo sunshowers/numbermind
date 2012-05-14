@@ -89,6 +89,7 @@ h2, #guesses > caption {
 
 p {
   margin-bottom: 1.5em;
+  line-height: 1.2em;
 }
 
 #step-container {
@@ -112,6 +113,10 @@ p {
 
 #steps > div > h1 {
   margin-bottom: 1em;
+}
+
+#fail-guess h1 {
+  margin-bottom: 0.5em;
 }
 
 #steps > div {
@@ -138,6 +143,12 @@ body.step1 #step2, body.step2 #step1 {
 
 
 #current-guess {
+  width: 400px;
+  float: left;
+}
+
+#fail-guess {
+  display: none;
   width: 400px;
   float: left;
 }
