@@ -26,7 +26,7 @@
           <label for="num-digits">
           How many digits does your number have?
           </label>
-          <input name="num-digits" type="number" min="2" max="5" data-bind="value: numDigits" />
+          <input name="num-digits" maxlength="1" type="text" data-bind="value: numDigits" pattern="[2-5]" />
           <a data-bind="click: moveToStep2" href="#">Next</a>
         </div>
       </div>
@@ -36,7 +36,7 @@
         <div id="current-guess">
           <div>Our guess
           <div class="guess" data-bind="text: currentGuess"></div>
-          <input type="number" min="0" data-bind="value: currentCorrectDigits, max: numDigits" />
+          <input type="text" maxlength="1" data-bind="value: currentCorrectDigits, range: [0, numDigits], valueUpdate: 'afterkeydown'" />
           <a data-bind="click: handleGuessResponse" href="#">Next guess</a>
           </div>
         </div>

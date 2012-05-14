@@ -11,20 +11,28 @@ function moveTo(step) {
     $("body").removeClass("step2").addClass("step1");
   }
 }
-ko.bindingHandlers.max = {
+ko.bindingHandlers.range = {
   update: function(element, valueAccessor) {
-    var value = ko.utils.unwrapObservable(valueAccessor());
-    element.setAttribute("max", value);
+    var value = valueAccessor();
+    var min = ko.utils.unwrapObservable(value[0]);
+    var max = ko.utils.unwrapObservable(value[1]);
+    element.setAttribute("pattern", "[" + min + "-" + max + "]");
   }
 };
 
 ko.extenders.integer = function (target) {
   var result = ko.dependentObservable({
-    read: function() {
-      return parseInt(target());
-    },
+    read: target,
     write: function(val) {
-      target(parseInt(val));
+      var current = target();
+      var num = (val === "" || isNaN(val)) ? 0 : parseInt(val);
+      if (num !== current) {
+        target(num);
+      }
+      else {
+        if (val !== current)
+          target.notifySubscribers(num);
+      }
     }
   });
   return result;

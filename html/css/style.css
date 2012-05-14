@@ -145,12 +145,6 @@ label {
   color: rgb(242, 242, 242);
 }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
 input {
   border: 0px;
   margin-top: 0.5em;
@@ -165,6 +159,15 @@ input {
   padding-right: auto;
   margin-left: auto;
   margin-right: auto;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  -ms-transition: all 0.1s ease-in-out;  
+  transition: all 0.1s ease-in-out;
+}
+
+input:invalid {
+  background-color: rgb(120, 40, 40);
 }
 
 #step1 label, #step1 input, #step2 input {
