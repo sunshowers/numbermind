@@ -26,7 +26,7 @@
           <label for="num-digits">
           How many digits does your number have?
           </label>
-          <input name="num-digits" maxlength="1" type="text" data-bind="value: numDigits" pattern="[2-5]" />
+          <input name="num-digits" maxlength="1" type="text" data-bind="value: numDigitsText, valueUpdate: 'afterkeydown'" pattern="[2-5]" required />
           <a data-bind="click: moveToStep2" href="#">Next</a>
         </div>
       </div>

@@ -20,36 +20,32 @@ ko.bindingHandlers.range = {
   }
 };
 
-ko.extenders.integer = function (target) {
-  var result = ko.dependentObservable({
-    read: target,
-    write: function(val) {
-      var current = target();
-      var num = (val === "" || isNaN(val)) ? 0 : parseInt(val);
-      if (num !== current) {
-        target(num);
-      }
-      else {
-        if (val !== current)
-          target.notifySubscribers(num);
-      }
-    }
+function makeIntComputed(parent) {
+  var result = ko.computed(function () {
+    var val = parent();
+    var num = (val === "" || isNaN(val)) ? 0 : parseInt(val);
+    return num;
   });
   return result;
-};
-var viewModel = {
-  numDigits: ko.observable(4).extend({integer: true}),
-  _setupNextGuess: function (data) {
+}
+
+function ViewModel() {
+  this.numDigitsText = ko.observable(4);
+  this.numDigits = makeIntComputed(this.numDigitsText);
+
+  this._setupNextGuess = function (data) {
     this.addGuessURL(data.addGuessURL);
     this.currentGuess(data.nextGuess);
-  },
-  moveToStep2: function () {
-    moveTo(2);
-  },
-  moveToStep1: function () {
+  };
+
+  this.moveToStep1 = function () {
     moveTo(1);
-  },
-  handleGuessResponse: function () {
+  };
+  this.moveToStep2 = function () {
+    moveTo(2);
+  };
+
+  this.handleGuessResponse = function () {
     this.guesses.unshift({guess: this.currentGuess(),
                           correctDigits: this.currentCorrectDigits()});
     var self = this;
@@ -57,15 +53,19 @@ var viewModel = {
       console.log("Incoming data: " + JSON.stringify(data));
       self._setupNextGuess(data);
     });
-  },
-  resetGuesses: function() {
+  };
+
+  this.resetGuesses = function() {
     this.addGuessURL("");
     this.currentGuess(0);
     this.currentCorrectDigits(0);
     this.guesses([]);
-  },
-  addGuessURL: ko.observable(""),
-  currentGuess: ko.observable("0"),
-  currentCorrectDigits: ko.observable(0).extend({integer: true}),
-  guesses: ko.observableArray([])
-};
+  };
+
+  this.addGuessURL = ko.observable("");
+  this.currentGuess = ko.observable("0");
+  this.currentCorrectDigits = ko.observable(0);
+  this.guesses = ko.observableArray([]);
+}
+
+var viewModel = new ViewModel();
