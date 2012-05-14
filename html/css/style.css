@@ -83,7 +83,7 @@ h1, body > header h1 {
   font-variant: small-caps;
 }
 
-h2 {
+h2, #guesses > caption {
   font-variant: small-caps;
 }
 
@@ -92,7 +92,7 @@ p {
 }
 
 #step-container {
-  max-width: 1200px;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
@@ -138,13 +138,25 @@ body.step1 #step2, body.step2 #step1 {
 
 
 #current-guess {
-  width: 50%;
+  width: 400px;
   float: left;
 }
 
 #guesses {
-  width: 50%;
+  width: 400px;
   float: right;
+}
+
+#guesses > caption {
+  margin-bottom: 0.5em;
+}
+
+#guesses td {
+  width: 50%;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  font-size: 1.2em;
+  color: white;
 }
 
 label {
@@ -187,10 +199,6 @@ input[type="submit"] {
   color: white;
   text-transform: uppercase;
   font-family: "Montserrat", sans-serif;
-}
-
-#step1 label, #step1 input, #step2 input {
-  display: block;
 }
 
 .guess {

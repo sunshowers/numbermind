@@ -25,11 +25,15 @@
         <p>Memorize it or write it down where we can't see it.</p>
         <div>
         <form data-bind="submit: moveToStep2" autocomplete="off">
+        <div>
           <label for="num-digits">
           How many digits does your number have?
           </label>
+        </div>
+        <div>
           <input name="num-digits" maxlength="1" type="text" data-bind="value: numDigitsText, valueUpdate: 'afterkeydown'" pattern="[2-5]" required />
-          <input type="submit" value="Start!">
+        </div>
+        <div><input type="submit" value="Start!"></div>
         </form>
         </div>
       </div>
@@ -41,15 +45,16 @@
           <div class="guess" data-bind="text: currentGuess"></div>
           <form data-bind="submit: handleGuessResponse" autocomplete="off">
             <input type="text" maxlength="1" data-bind="value: currentCorrectDigitsText, range: [0, numDigits], valueUpdate: 'afterkeydown', style: { backgroundColor: computeColor(currentCorrectDigitsText()) }" required />
-            <input type="submit" data-bind="value: nextGuessButtonText">
+            <div><input type="submit" data-bind="value: nextGuessButtonText"></div>
           </form>
           </div>
         </div>
         <table id="guesses">
+          <caption>Previous guesses</caption>
           <tbody data-bind="foreach: guesses">
             <tr>
               <td data-bind="text: guess"></td>
-              <td data-bind="text: correctDigits"></td>
+              <td data-bind="text: correctDigits, style: { backgroundColor: $parent.computeColor(correctDigits) }"></td>
             </tr>
           </tbody>
         </table>
