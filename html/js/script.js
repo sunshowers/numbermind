@@ -30,7 +30,7 @@ function makeIntComputed(parent) {
 }
 
 function ViewModel() {
-  this.numDigitsText = ko.observable(4);
+  this.numDigitsText = ko.observable("4");
   this.numDigits = makeIntComputed(this.numDigitsText);
 
   this._setupNextGuess = function (data) {
@@ -48,6 +48,7 @@ function ViewModel() {
   this.handleGuessResponse = function () {
     this.guesses.unshift({guess: this.currentGuess(),
                           correctDigits: this.currentCorrectDigits()});
+    this.currentGuess("....");
     var self = this;
     $.post(this.addGuessURL(), ko.toJSON(this), function (data) {
       console.log("Incoming data: " + JSON.stringify(data));
@@ -57,14 +58,23 @@ function ViewModel() {
 
   this.resetGuesses = function() {
     this.addGuessURL("");
-    this.currentGuess(0);
-    this.currentCorrectDigits(0);
+    this.currentGuess("....");
+    this.currentCorrectDigitsText("0");
     this.guesses([]);
   };
 
   this.addGuessURL = ko.observable("");
-  this.currentGuess = ko.observable("0");
-  this.currentCorrectDigits = ko.observable(0);
+  this.currentGuess = ko.observable("....");
+  this.currentCorrectDigitsText = ko.observable("0");
+  this.currentCorrectDigits = makeIntComputed(this.currentCorrectDigitsText);
+
+  this.nextGuessButtonText = ko.computed(function () {
+    if (this.currentCorrectDigits() == this.numDigits())
+      return "Finish";
+    else
+      return "Next";
+  }, this);
+
   this.guesses = ko.observableArray([]);
 }
 

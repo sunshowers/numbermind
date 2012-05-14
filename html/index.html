@@ -6,6 +6,7 @@
     <script src="js/knockout-2.1.0.js"></script>
     <script src="js/modernizr-custom.js"></script>
     <script src="js/number-polyfill/number-polyfill.js"></script>
+    <script src="js/color.js"></script>
     <script src="js/script.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Montserrat">
@@ -38,8 +39,10 @@
         <div id="current-guess">
           <div>Our guess
           <div class="guess" data-bind="text: currentGuess"></div>
-          <input type="text" maxlength="1" data-bind="value: currentCorrectDigits, range: [0, numDigits], valueUpdate: 'afterkeydown'" required />
-          <a data-bind="click: handleGuessResponse" href="#">Next guess</a>
+          <form data-bind="submit: handleGuessResponse" autocomplete="off">
+            <input type="text" maxlength="1" data-bind="value: currentCorrectDigitsText, range: [0, numDigits], valueUpdate: 'afterkeydown'" required />
+            <input type="submit" data-bind="value: nextGuessButtonText">
+          </form>
           </div>
         </div>
         <table id="guesses">
