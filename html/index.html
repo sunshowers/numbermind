@@ -40,7 +40,7 @@
           <div>Our guess
           <div class="guess" data-bind="text: currentGuess"></div>
           <form data-bind="submit: handleGuessResponse" autocomplete="off">
-            <input type="text" maxlength="1" data-bind="value: currentCorrectDigitsText, range: [0, numDigits], valueUpdate: 'afterkeydown'" required />
+            <input type="text" maxlength="1" data-bind="value: currentCorrectDigitsText, range: [0, numDigits], valueUpdate: 'afterkeydown', style: { backgroundColor: computeColor(currentCorrectDigitsText()) }" required />
             <input type="submit" data-bind="value: nextGuessButtonText">
           </form>
           </div>

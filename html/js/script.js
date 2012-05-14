@@ -16,14 +16,15 @@ ko.bindingHandlers.range = {
     var value = valueAccessor();
     var min = ko.utils.unwrapObservable(value[0]);
     var max = ko.utils.unwrapObservable(value[1]);
-    element.setAttribute("pattern", "[" + min + "-" + max + "]");
+    if (min >= 0 && max >= 0)
+      element.setAttribute("pattern", "[" + min + "-" + max + "]");
   }
 };
 
 function makeIntComputed(parent) {
   var result = ko.computed(function () {
     var val = parent();
-    var num = (val === "" || isNaN(val)) ? 0 : parseInt(val);
+    var num = (val === "" || (isNaN(val))) ? 0 : parseInt(val);
     return num;
   });
   return result;
@@ -76,6 +77,35 @@ function ViewModel() {
   }, this);
 
   this.guesses = ko.observableArray([]);
+
+  var lastColor = "rgb(0, 120, 80)";
+  this.computeColor = function(correctDigitsText) {
+    var numDigits = this.numDigits();
+    var newColor;
+    if (correctDigitsText === "") {
+      newColor = lastColor;
+    }
+    else {
+      var isInvalid = isNaN(correctDigitsText);
+      if (!isInvalid) {
+        var correctDigits = parseInt(correctDigitsText);
+        if (correctDigits > numDigits)
+          isInvalid = true;
+      }
+      if (isInvalid) {
+        // Reddish invalid color
+        newColor = "rgb(120, 40, 40)";
+      }
+      else {
+        var wrongDigits = numDigits - correctDigits;
+        var baseGreen = Color("rgb(0, 120, 80)");
+        newColor = baseGreen.desaturate((wrongDigits / numDigits))
+                            .lighten(1 * (wrongDigits / numDigits))
+                            .hslString();
+      }
+    }
+    return lastColor = newColor;
+  }
 }
 
 var viewModel = new ViewModel();
