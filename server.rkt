@@ -51,4 +51,5 @@
                #:launch-browser? #f
                #:servlet-path "/numbermind"
                #:extra-files-paths (list html-path)
+               #:listen-ip "0.0.0.0"
                #:port servlet-port)
