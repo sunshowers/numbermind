@@ -45,8 +45,10 @@
      (send-next-guess request
                       (string-pad (number->string (random (expt 10 input-num-digits))) input-num-digits #\0)))))
 
+(define servlet-port (string->number (or (getenv "PORT") "8080")))
+
 (serve/servlet start
                #:launch-browser? #f
                #:servlet-path "/numbermind"
                #:extra-files-paths (list html-path)
-               #:port 8080)
+               #:port servlet-port)
