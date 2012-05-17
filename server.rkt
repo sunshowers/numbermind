@@ -37,7 +37,7 @@
   (unless (and
            (exact-nonnegative-integer? input-num-digits)
            (>= input-num-digits 2)
-           (<= input-num-digits 5))
+           (<= input-num-digits 8))
     (raise (exn:fail:contract "Input should be a number" (current-continuation-marks))))
   (parameterize ([num-digits input-num-digits])
     (with-new-numbermind
