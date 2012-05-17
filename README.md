@@ -24,8 +24,8 @@ Where can I see it in action?
 [Heroku](http://www.heroku.com/). If you know the right incantations, you can
 host it yourself too.
 
-Wait, I thought Heroku was only for latte-sipping hipsters using Ruby?
-======================================================================
+Wait, I thought Heroku was only for hipsters using Ruby?
+========================================================
 
 Heroku's Cedar stack supports absolutely anything that'll run on Linux x64.
 All you need to do is:
