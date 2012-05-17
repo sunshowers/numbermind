@@ -34,9 +34,11 @@ All you need to do is:
 distribute` it to a subdirectory. I use `deploy/racket`.
 2. `git init` in the `deploy` subdirectory.
 3. Create a Heroku app with the Cedar stack and the [null buildpack](https://github.com/ryandotsmith/null-buildpack):
+
   $ heroku create -s cedar --buildpack http://github.com/ryandotsmith/null-buildpack.git
 
 4. Add a file called `Procfile` to the directory with the following contents:
+
   web: racket/bin/server
 
 5. Check everything into your newly created Git repository.
